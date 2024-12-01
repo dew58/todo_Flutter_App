@@ -39,7 +39,7 @@ Future<void> main() async {
       ),
       BlocProvider(
         create: (context) => AddToDoCubit(),
-      )
+      ),
     ],
     child: MyApp(
       appRouter: AppRouter(),
