@@ -8,34 +8,26 @@ part 'add_to_do_state.dart';
 class AddToDoCubit extends Cubit<AddToDoState> {
   AddToDoCubit() : super(AddToDoInitial());
 
+  var todos;
+  var box = Hive.box<ToDo>("myTodo");
+
   addToDo(ToDo todo) async {
-    emit(AddToDoLoading());
     try {
-      var box = Hive.box<ToDo>("myTodo");
+      emit(AddToDoDummy());
       await box.add(todo);
       emit(AddToDoSuccessAdding());
-      getTodos();
     } catch (e) {
       emit(AddToDoFailer(error: e.toString()));
-      print(e);
     }
   }
 
   getTodos() {
-    emit(AddToDoLoading());
     try {
-      var box = Hive.box<ToDo>("myTodo");
-      var todos = box.values.toList();
-      emit(AddToDoSuccessGetting(todos: todos));
+      emit(AddToDoDummy());
+      todos = box.values.toList();
+      emit(AddToDoSuccess());
     } catch (e) {
       emit(AddToDoFailer(error: e.toString()));
-      print(e);
     }
-  }
-
-  deleteToDo(dynamic key) async {
-    emit(AddToDoLoading());
-    var box = Hive.box<ToDo>("myTodo");
-    await box.delete(key);
   }
 }

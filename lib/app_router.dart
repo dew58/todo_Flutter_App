@@ -35,11 +35,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const OnbordingUi());
       case home:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider<AddToDoCubit>(
-            create: (_) =>
-                AddToDoCubit(), // Create a new instance of AddToDoCubit
-            child: const HomePage(),
-          ),
+          builder: (context) => const HomePage(),
         );
     }
   }
