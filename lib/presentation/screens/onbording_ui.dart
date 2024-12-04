@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:todo/constans/texts.dart';
-import 'package:todo/presentation/screens/welcomeUI.dart';
+import '../../core/constans/texts.dart';
+import 'welcome_ui.dart';
 
 class OnbordingUi extends StatefulWidget {
   const OnbordingUi({super.key});

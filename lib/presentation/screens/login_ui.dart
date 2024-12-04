@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/domain/loginAuth/cubit/auth_cubit.dart';
-import 'package:todo/presentation/cubits/add_todo_cubit/add_to_do_cubit.dart';
-import 'package:todo/presentation/screens/signIN.dart';
-import 'package:todo/presentation/screens/home/mainHome.dart';
+import '../../core/routes/settings.dart';
+import '../cubits/login_auth/auth_cubit.dart';
+import 'sign_in_ui.dart';
 
 class Loginui extends StatefulWidget {
   const Loginui({super.key});
@@ -15,21 +14,19 @@ class Loginui extends StatefulWidget {
 class _LoginuiState extends State<Loginui> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final Auth_Cubit = BlocProvider.of<AuthCubit>(context);
-    return BlocBuilder<AuthCubit, AuthState>(
-      bloc: Auth_Cubit,
-      builder: (context, state) {
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
         if (state is AuthLoading) {
-          return const Center(child: CircularProgressIndicator());
+          const Center(child: CircularProgressIndicator());
         } else if (state is AuthSuccess) {
-          BlocProvider(
-            create: (context) => AddToDoCubit(),
-            child: HomePage(),
+          Navigator.of(context).pushReplacementNamed(
+            Routers.home,
           );
         } else if (state is AuthError) {}
-        return Scaffold(
+        Scaffold(
           backgroundColor: const Color(0XFF121212),
           appBar: AppBar(
             backgroundColor: const Color(0XFF121212),
@@ -46,11 +43,9 @@ class _LoginuiState extends State<Loginui> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
-                  ),
+                const Text(
+                  "Login",
+                  style: TextStyle(color: Colors.white, fontSize: 40),
                 ),
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.08,
@@ -73,7 +68,7 @@ class _LoginuiState extends State<Loginui> {
                 Center(
                   child: InkWell(
                       onTap: () {
-                        Auth_Cubit.logIn(
+                        context.read<AuthCubit>().logIn(
                             _emailController.text, _passwordController.text);
                       },
                       child: Container(

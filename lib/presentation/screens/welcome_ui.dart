@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo/presentation/screens/loginUI.dart';
 
-import 'package:todo/constans/texts.dart';
-import 'package:todo/presentation/screens/signIN.dart';
+import '../../core/constans/texts.dart';
+import 'login_ui.dart';
+import 'sign_in_ui.dart';
 
 class Welcomeui extends StatefulWidget {
   const Welcomeui({super.key});

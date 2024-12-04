@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/constans/my_colors.dart';
 import 'package:todo/domain/models/todo_model.dart';
-import 'package:todo/presentation/cubits/add_todo_cubit/add_to_do_cubit.dart';
+import '../../../../core/themes/my_colors.dart';
+import '../../../cubits/add_todo_cubit/add_to_do_cubit.dart';
 
 class Index extends StatefulWidget {
   const Index({super.key});
@@ -31,17 +31,14 @@ class _IndexState extends State<Index> {
         if (state is AddToDoSuccess ||
             state is AddToDoInitial ||
             state is AddToDoSuccessAdding) {
-          print("heeeereee in the consumer succcesss");
           context.read<AddToDoCubit>().getTodos();
           var todos = context.read<AddToDoCubit>().todos;
           if (todos == null || todos.isEmpty) {
-            print("heeeereee in the consumer nullll succcesss");
             return noTodos(context);
           } else {
             return listOfToDo(todos, context);
           }
         } else {
-          print("heeereee nott correct statttee");
           return noTodos(context);
         }
       }),

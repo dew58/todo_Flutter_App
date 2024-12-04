@@ -1,13 +1,15 @@
-import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../core/routes/settings.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final FirebaseAuth _firebaseAuth;
 
-  AuthCubit(this._firebaseAuth, firebaseAuth) : super(AuthInitial());
+  AuthCubit(this._firebaseAuth) : super(AuthInitial());
 
   Future logIn(String email, String password) async {
     emit(AuthLoading());
@@ -18,7 +20,6 @@ class AuthCubit extends Cubit<AuthState> {
         password: password,
       );
       emit(AuthSuccess());
-      print("llllllllllloooooooooooooggggeddddd");
     } catch (e) {
       emit(AuthError(e.toString()));
     }
@@ -46,7 +47,18 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> logOut() async {
-    await FirebaseAuth.instance.signOut();
+  Future<void> logOut(BuildContext context) async {
+    emit(AuthLoading());
+
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.of(context).pushReplacementNamed(
+        Routers.logIn,
+      );
+
+      emit(AuthInitial());
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
   }
 }

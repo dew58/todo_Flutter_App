@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo/constans/my_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/themes/my_colors.dart';
+import '../../../cubits/login_auth/auth_cubit.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -65,53 +68,63 @@ class Profile extends StatelessWidget {
               ]),
             ]),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Settings",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              profileItem("assets/icons/setting-2.png", "App Settings", () {}),
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Account",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              profileItem(
-                  "assets/icons/user.png", "Change account name", () {}),
-              profileItem(
-                  "assets/icons/key.png", "Change account password", () {}),
-              profileItem(
-                  "assets/icons/camera.png", "Change account image", () {}),
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Uptodo",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              profileItem("assets/icons/menu.png", "About US", () {}),
-              profileItem("assets/icons/info-circle.png", "FAQ", () {}),
-              profileItem("assets/icons/flash.png", "Help & Feedback", () {}),
-              profileItem("assets/icons/like.png", "Support US", () {}),
-              profileItem("assets/icons/logout.png", "Log out", () {}),
-            ],
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      "Settings",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  profileItem(
+                      "assets/icons/setting-2.png", "App Settings", () {}),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      "Account",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  profileItem(
+                      "assets/icons/user.png", "Change account name", () {}),
+                  profileItem(
+                      "assets/icons/key.png", "Change account password", () {}),
+                  profileItem(
+                      "assets/icons/camera.png", "Change account image", () {}),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      "Uptodo",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  profileItem("assets/icons/menu.png", "About US", () {}),
+                  profileItem("assets/icons/info-circle.png", "FAQ", () {}),
+                  profileItem(
+                      "assets/icons/flash.png", "Help & Feedback", () {}),
+                  profileItem("assets/icons/like.png", "Support US", () {}),
+                  profileItem("assets/icons/logout.png", "Log out", () {
+                    print("in the log out buttonn");
+                    context.read<AuthCubit>().logOut(context);
+                    print("in the end of log out buttonn");
+                  }),
+                ],
+              );
+            },
           )
         ],
       )),
@@ -123,7 +136,7 @@ class Profile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: InkWell(
         onTap: () {
-          function;
+          function();
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

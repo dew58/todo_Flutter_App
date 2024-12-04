@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
-import 'package:todo/constans/my_colors.dart';
+
 import 'package:todo/domain/models/todo_model.dart';
 import 'package:todo/presentation/cubits/add_todo_cubit/add_to_do_cubit.dart';
 import 'package:todo/presentation/screens/home/screens/calendar.dart';
 import 'package:todo/presentation/screens/home/screens/focues.dart';
 import 'package:todo/presentation/screens/home/screens/index.dart';
 import 'package:todo/presentation/screens/home/screens/profile.dart';
+
+import '../../../core/themes/my_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

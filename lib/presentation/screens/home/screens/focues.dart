@@ -1,6 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/constans/my_colors.dart';
+import '../../../../core/themes/my_colors.dart';
 
 class Focues extends StatefulWidget {
   const Focues({super.key});
