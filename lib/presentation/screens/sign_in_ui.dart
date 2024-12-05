@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/core/helper/extenstion.dart';
 import 'package:todo/presentation/widgets/my_divider.dart';
 
@@ -15,6 +16,8 @@ class Signin extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmpasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,34 +48,145 @@ class Signin extends StatelessWidget {
         },
         child: SafeArea(
           child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.only(left: 20),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    child: Text(
-                      Texts.register,
-                      style: TextStyle(color: Colors.white, fontSize: 40),
+                  SizedBox(
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        Texts.register,
+                        style: TextStyle(color: Colors.white, fontSize: 40.sp),
+                      ),
                     ),
                   ),
                   verticalSpace(25),
-                  const Text(Texts.userNameLoginPage,
-                      style: TextStyle(color: Colors.white)),
-                  TextField(
-                    controller: _emailController,
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.w),
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(Texts.userNameLoginPage,
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                  verticalSpace(10),
+                  SizedBox(
+                    width: 327.w,
+                    height: 50.h,
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        hintText: "Enter Your Username",
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.white),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.white),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.red),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.red),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                   verticalSpace(25),
-                  const Text(Texts.passwordLoginPage,
-                      style: TextStyle(color: Colors.white)),
-                  TextField(
-                    controller: _passwordController,
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.w),
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(Texts.passwordLoginPage,
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                  verticalSpace(10),
+                  SizedBox(
+                    width: 327.w,
+                    height: 50.h,
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        hintText: "Enter Your password",
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.white),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.white),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.red),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.red),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                   verticalSpace(25),
-                  const Text(Texts.confirmPassword,
-                      style: TextStyle(color: Colors.white)),
-                  TextField(
-                    controller: _passwordController,
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.w),
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(Texts.confirmPassword,
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                  verticalSpace(10),
+                  SizedBox(
+                    width: 327.w,
+                    height: 50.h,
+                    child: TextField(
+                      controller: _confirmpasswordController,
+                      decoration: InputDecoration(
+                        hintText: "Confirm your password",
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.white),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.white),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.red),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.7, color: Colors.red),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                   verticalSpace(40),
                   Center(
@@ -84,8 +198,8 @@ class Signin extends StatelessWidget {
                               );
                         },
                         child: Container(
-                          width: MediaQuery.sizeOf(context).width * 0.8,
-                          height: MediaQuery.sizeOf(context).height * 0.07,
+                          width: 327.w,
+                          height: 50.h,
                           decoration: const BoxDecoration(
                             color: MyColors.purpel,
                             borderRadius: BorderRadius.all(
@@ -109,8 +223,8 @@ class Signin extends StatelessWidget {
                     child: InkWell(
                       onTap: () {},
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 0.8,
-                        height: MediaQuery.sizeOf(context).height * 0.07,
+                        width: 327.w,
+                        height: 50.h,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: MyColors.lighterPurpel,
@@ -137,7 +251,7 @@ class Signin extends StatelessWidget {
                       ),
                     ),
                   ),
-                  verticalSpace(100),
+                  verticalSpace(90),
                   Center(
                     child: SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.8,

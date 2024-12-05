@@ -34,7 +34,9 @@ class Index extends StatelessWidget {
           if (todos == null || todos.isEmpty) {
             return const NoTodo();
           } else {
-            return const ListOfTodo();
+            return ListOfTodo(
+              context: context,
+            );
           }
         } else {
           return const NoTodo();
