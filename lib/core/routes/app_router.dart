@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/core/routes/settings.dart';
@@ -13,22 +12,22 @@ import '../../presentation/screens/welcome_ui.dart';
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     // final arguments = settings.arguments;
-    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    // final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
     switch (settings.name) {
       case Routers.logIn:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => AuthCubit(firebaseAuth),
-            child: const Loginui(),
+            create: (context) => AuthCubit(),
+            child: Loginui(),
           ),
         );
 
       case Routers.singUp:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => AuthCubit(firebaseAuth),
-            child: const Signin(),
+            create: (context) => AuthCubit(),
+            child: Signin(),
           ),
         );
 

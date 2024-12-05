@@ -1,103 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:todo/core/helper/extenstion.dart';
+import 'package:todo/core/helper/spacing.dart';
 
 import '../../core/constans/texts.dart';
-import 'login_ui.dart';
-import 'sign_in_ui.dart';
+import '../../core/routes/settings.dart';
+import '../../core/themes/my_colors.dart';
 
-class Welcomeui extends StatefulWidget {
+class Welcomeui extends StatelessWidget {
   const Welcomeui({super.key});
 
   @override
-  State<Welcomeui> createState() => _WelcomeuiState();
-}
-
-class _WelcomeuiState extends State<Welcomeui> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFF121212),
+      backgroundColor: MyColors.mainBackGround,
       appBar: AppBar(
-        backgroundColor: const Color(0XFF121212),
+        backgroundColor: MyColors.mainBackGround,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
           icon: const Icon(Icons.arrow_back_ios),
           color: Colors.white,
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              TextOfOnBording().welcomeMainText,
-              style: const TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              TextOfOnBording().welcomeSecondText,
-              style: const TextStyle(color: Color.fromARGB(174, 255, 255, 255)),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.5,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Loginui()),
-                );
-              },
-              child: Container(
-                width: MediaQuery.sizeOf(context).width * 0.8,
-                height: MediaQuery.sizeOf(context).height * 0.07,
-                decoration: const BoxDecoration(
-                  color: Color(0xff8875FF),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(4),
-                  ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  Texts.welcomeMainText,
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
-                child: const Center(
-                  child: Text(
-                    'LOGIN',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                verticalSpace(20),
+                const Text(
+                  Texts.welcomeSecondText,
+                  style: TextStyle(color: Color.fromARGB(174, 255, 255, 255)),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Signin()),
-                );
-              },
-              child: Container(
-                width: MediaQuery.sizeOf(context).width * 0.8,
-                height: MediaQuery.sizeOf(context).height * 0.07,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xff8875FF),
+                verticalSpace(370),
+                InkWell(
+                  onTap: () {
+                    context.pushNamed(Routers.logIn);
+                  },
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 0.8,
+                    height: MediaQuery.sizeOf(context).height * 0.07,
+                    decoration: const BoxDecoration(
+                      color: MyColors.lighterPurpel,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(4))),
-                child: const Center(
-                    child: Text(
-                  "CREATE ACCOUNT",
-                  style: TextStyle(color: Colors.white),
-                )),
-              ),
-            )
-          ],
+                    child: const Center(
+                      child: Text(
+                        Texts.logInInWelcomePage,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                verticalSpace(20),
+                InkWell(
+                  onTap: () {
+                    context.pushNamed(Routers.singUp);
+                  },
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 0.8,
+                    height: MediaQuery.sizeOf(context).height * 0.07,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: MyColors.lighterPurpel,
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4))),
+                    child: const Center(
+                        child: Text(
+                      Texts.creatAccount,
+                      style: TextStyle(color: Colors.white),
+                    )),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

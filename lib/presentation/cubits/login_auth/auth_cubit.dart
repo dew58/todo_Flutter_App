@@ -7,9 +7,9 @@ import '../../../core/routes/settings.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final FirebaseAuth _firebaseAuth;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  AuthCubit(this._firebaseAuth) : super(AuthInitial());
+  AuthCubit() : super(AuthInitial());
 
   Future logIn(String email, String password) async {
     emit(AuthLoading());

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +6,6 @@ import 'package:todo/domain/models/todo_model.dart';
 import 'package:todo/presentation/cubits/add_todo_cubit/add_to_do_cubit.dart';
 import 'package:todo/to_do_app.dart';
 import 'core/routes/app_router.dart';
-import 'core/routes/settings.dart';
 import 'firebase_options.dart';
 
 late String initialRoute;
@@ -21,19 +19,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user == null) {
-      initialRoute = Routers.logIn;
-    } else {
-      initialRoute = Routers.home;
-    }
-  });
 
   runApp(BlocProvider(
     create: (context) => AddToDoCubit(),
     child: MyApp(
       appRouter: AppRouter(),
-      initialRoute: initialRoute,
     ),
   ));
 }

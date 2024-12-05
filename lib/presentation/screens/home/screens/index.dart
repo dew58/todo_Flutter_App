@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/domain/models/todo_model.dart';
+import 'package:todo/presentation/widgets/list_of_todo.dart';
+import 'package:todo/presentation/widgets/no_todo.dart';
+import '../../../../core/constans/texts.dart';
 import '../../../../core/themes/my_colors.dart';
 import '../../../cubits/add_todo_cubit/add_to_do_cubit.dart';
 
-class Index extends StatefulWidget {
+class Index extends StatelessWidget {
   const Index({super.key});
 
-  @override
-  State<Index> createState() => _IndexState();
-}
-
-class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          actions: const [Icon(Icons.verified_user)],
-          elevation: 0,
-          leading: Image.asset("assets/icons/sort.png"),
-          title: const Center(
-            child: Text(
-              "Home",
-              style: TextStyle(color: Colors.white),
-            ),
+        actions: const [Icon(Icons.verified_user)],
+        elevation: 0,
+        leading: Image.asset("assets/icons/sort.png"),
+        title: const Center(
+          child: Text(
+            Texts.home,
+            style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.black),
-      backgroundColor: Colors.black,
+        ),
+        backgroundColor: MyColors.mainBackGround,
+      ),
+      backgroundColor: MyColors.mainBackGround,
       body: BlocBuilder<AddToDoCubit, AddToDoState>(builder: (context, state) {
         if (state is AddToDoSuccess ||
             state is AddToDoInitial ||
@@ -34,91 +32,14 @@ class _IndexState extends State<Index> {
           context.read<AddToDoCubit>().getTodos();
           var todos = context.read<AddToDoCubit>().todos;
           if (todos == null || todos.isEmpty) {
-            return noTodos(context);
+            return const NoTodo();
           } else {
-            return listOfToDo(todos, context);
+            return const ListOfTodo();
           }
         } else {
-          return noTodos(context);
+          return const NoTodo();
         }
       }),
-    );
-  }
-
-  Widget noTodos(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset("assets/auth/homeimage.png"),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            "What do you want to do today?",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text("Tap + to add your tasks",
-              style: TextStyle(color: Colors.white, fontSize: 15)),
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.15,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget listOfToDo(List<ToDo> todos, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-      child: ListView.builder(
-          itemCount: todos.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 8),
-              child: Container(
-                height: 72,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(4),
-                    ),
-                    color: MyColors.liteGray),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            todos[index].delete();
-                            // context.read<AddToDoCubit>().getTodos();
-                          },
-                          icon: const Icon(Icons.circle)),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            todos[index].name,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            todos[index].dateTime,
-                            style: const TextStyle(color: Colors.white),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
     );
   }
 }

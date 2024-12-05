@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todo/domain/models/todo_model.dart';
 
@@ -10,6 +11,12 @@ class AddToDoCubit extends Cubit<AddToDoState> {
 
   var todos;
   var box = Hive.box<ToDo>("myTodo");
+
+  final formKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   addToDo(ToDo todo) async {
     try {

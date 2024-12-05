@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo/core/helper/spacing.dart';
 
+import '../../../../core/constans/texts.dart';
 import '../../../../core/themes/my_colors.dart';
 import '../../../cubits/login_auth/auth_cubit.dart';
+import '../../../widgets/profile_item.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -10,158 +14,126 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: MyColors.mainBackGround,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: MyColors.mainBackGround,
         title: const Center(
           child: Text(
-            "Profile",
+            Texts.profile,
+            textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white),
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
-        children: [
-          Center(
-            child: Column(children: [
-              const CircleAvatar(
-                radius: 35,
+            children: [
+              Center(
+                child: Column(children: [
+                  const CircleAvatar(
+                    radius: 35,
+                  ),
+                  const Text(
+                    "Martha Hays",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          height: MediaQuery.sizeOf(context).height * 0.07,
+                          decoration: const BoxDecoration(
+                            color: MyColors.liteGray,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "10 Task left",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          height: MediaQuery.sizeOf(context).height * 0.07,
+                          decoration: const BoxDecoration(
+                            color: MyColors.liteGray,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "10 Task done",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ]),
+                ]),
               ),
-              const Text(
-                "Martha Hays",
-                style: TextStyle(color: Colors.white),
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                Container(
-                  width: MediaQuery.sizeOf(context).width * 0.4,
-                  height: MediaQuery.sizeOf(context).height * 0.07,
-                  decoration: const BoxDecoration(
-                    color: MyColors.liteGray,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(4),
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "10 Task left",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.sizeOf(context).width * 0.4,
-                  height: MediaQuery.sizeOf(context).height * 0.07,
-                  decoration: const BoxDecoration(
-                    color: MyColors.liteGray,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(4),
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "10 Task done",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ]),
-            ]),
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpace(15),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: const Text(
+                          Texts.settings,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      ProfileItem().profileItem(
+                          "assets/icons/setting-2.png", "App Settings", () {}),
+                      verticalSpace(15),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: const Text(
+                          Texts.account,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      ProfileItem().profileItem("assets/icons/user.png",
+                          "Change account name", () {}),
+                      ProfileItem().profileItem("assets/icons/key.png",
+                          "Change account password", () {}),
+                      ProfileItem().profileItem("assets/icons/camera.png",
+                          "Change account image", () {}),
+                      verticalSpace(10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: const Text(
+                          Texts.upTodo,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      ProfileItem().profileItem(
+                          "assets/icons/menu.png", "About US", () {}),
+                      ProfileItem().profileItem(
+                          "assets/icons/info-circle.png", "FAQ", () {}),
+                      ProfileItem().profileItem(
+                          "assets/icons/flash.png", "Help & Feedback", () {}),
+                      ProfileItem().profileItem(
+                          "assets/icons/like.png", "Support US", () {}),
+                      ProfileItem().profileItem(
+                          "assets/icons/logout.png", "Log out", () {
+                        context.read<AuthCubit>().logOut(context);
+                      }),
+                    ],
+                  );
+                },
+              )
+            ],
           ),
-          BlocBuilder<AuthCubit, AuthState>(
-            builder: (context, state) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Settings",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  profileItem(
-                      "assets/icons/setting-2.png", "App Settings", () {}),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Account",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  profileItem(
-                      "assets/icons/user.png", "Change account name", () {}),
-                  profileItem(
-                      "assets/icons/key.png", "Change account password", () {}),
-                  profileItem(
-                      "assets/icons/camera.png", "Change account image", () {}),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Uptodo",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  profileItem("assets/icons/menu.png", "About US", () {}),
-                  profileItem("assets/icons/info-circle.png", "FAQ", () {}),
-                  profileItem(
-                      "assets/icons/flash.png", "Help & Feedback", () {}),
-                  profileItem("assets/icons/like.png", "Support US", () {}),
-                  profileItem("assets/icons/logout.png", "Log out", () {
-                    print("in the log out buttonn");
-                    context.read<AuthCubit>().logOut(context);
-                    print("in the end of log out buttonn");
-                  }),
-                ],
-              );
-            },
-          )
-        ],
-      )),
-    );
-  }
-
-  Widget profileItem(String assets, String name, Function function) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: InkWell(
-        onTap: () {
-          function();
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Image.asset(assets),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    name,
-                    style: TextStyle(
-                        color: (name == "Log out") ? Colors.red : Colors.white),
-                  )
-                ],
-              ),
-            ),
-            if (!(name == "Log out"))
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white,
-              ),
-          ],
         ),
       ),
     );
