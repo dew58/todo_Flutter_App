@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/themes/my_colors.dart';
+import '../../domain/models/todo_model.dart';
 import '../cubits/add_todo_cubit/add_to_do_cubit.dart';
 
 // ignore: must_be_immutable
 class ListOfTodo extends StatelessWidget {
   BuildContext context;
+  List<ToDo> todos;
   ListOfTodo({
-    super.key,
+    Key? key,
     required this.context,
-  });
+    required this.todos,
+  }) : super(key: key);
 
   @override
   Widget build(context) {
-    var todos = context.read<AddToDoCubit>().todos;
     return BlocBuilder<AddToDoCubit, AddToDoState>(
       builder: (context, state) {
         return Padding(

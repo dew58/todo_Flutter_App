@@ -58,6 +58,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _myPage.dispose();
+    context.read<AddToDoCubit>().descriptionController.dispose();
+    context.read<AddToDoCubit>().nameController.dispose();
     super.dispose();
   }
 
@@ -190,6 +192,12 @@ class _HomePageState extends State<HomePage> {
                         context.read<AddToDoCubit>().autovalidateMode =
                             AutovalidateMode.always;
                       }
+
+                      context
+                          .read<AddToDoCubit>()
+                          .descriptionController
+                          .clear();
+                      context.read<AddToDoCubit>().nameController.clear();
                     },
                     child: const ImageIcon(
                       AssetImage("assets/icons/send.png"),

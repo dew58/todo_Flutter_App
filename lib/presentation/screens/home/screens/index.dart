@@ -11,6 +11,9 @@ class Index extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<AddToDoCubit>().getTodos();
+    print("get todos in the  build body");
+
     return Scaffold(
       appBar: AppBar(
         actions: const [Icon(Icons.verified_user)],
@@ -26,16 +29,18 @@ class Index extends StatelessWidget {
       ),
       backgroundColor: MyColors.mainBackGround,
       body: BlocBuilder<AddToDoCubit, AddToDoState>(builder: (context, state) {
+        context.read<AddToDoCubit>().getTodos();
+        print("get todos in the bloc builder");
         if (state is AddToDoSuccess ||
             state is AddToDoInitial ||
             state is AddToDoSuccessAdding) {
-          context.read<AddToDoCubit>().getTodos();
           var todos = context.read<AddToDoCubit>().todos;
-          if (todos == null || todos.isEmpty) {
+          if (todos.isEmpty) {
             return const NoTodo();
           } else {
             return ListOfTodo(
               context: context,
+              todos: todos,
             );
           }
         } else {

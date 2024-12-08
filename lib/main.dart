@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,16 +10,24 @@ import 'core/routes/app_router.dart';
 import 'firebase_options.dart';
 
 late String initialRoute;
+late Box<ToDo> box;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Hive.initFlutter();
-  Hive.registerAdapter(ToDoAdapter());
-  await Hive.openBox<ToDo>("myTodo");
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+  Hive.registerAdapter(ToDoAdapter());
+
+  FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+    if (user == null) {
+    } else {
+      var uId = FirebaseAuth.instance.currentUser!.uid;
+      box = await Hive.openBox('myTodo$uId');
+      debugPrint("open a box myTodo$uId");
+    }
+  });
 
   runApp(BlocProvider(
     create: (context) => AddToDoCubit(),
