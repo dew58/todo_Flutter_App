@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         title: 'ToDo List',
         theme: ThemeData(
             primarySwatch: Colors.blue,
-            canvasColor: MyColors.liteGray,
+            canvasColor: MyColors.mainBackGround,
             fontFamily: "Lato"),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: widget.appRouter.generateRoute,

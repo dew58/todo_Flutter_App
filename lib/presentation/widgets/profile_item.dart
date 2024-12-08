@@ -4,7 +4,7 @@ class ProfileItem {
   Widget profileItem(String assets, String name, Function function) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           function();
         },

@@ -41,7 +41,8 @@ class _HomePageState extends State<HomePage> {
   final PageController _myPage = PageController(initialPage: 0);
   int currentIndex = 0;
 
-  late Future<DateTime?> dateTime;
+  Future<DateTime?>? dateTime;
+  bool isTimeSelected = true;
 
   @override
   void initState() {
@@ -55,13 +56,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  @override
-  void dispose() {
-    _myPage.dispose();
-    context.read<AddToDoCubit>().descriptionController.dispose();
-    context.read<AddToDoCubit>().nameController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _myPage.dispose();
+  //   context.read<AddToDoCubit>().descriptionController.dispose();
+  //   context.read<AddToDoCubit>().nameController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _listIcon(String name, String icon, bool selected, int page) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         setState(() {
           _myPage.jumpToPage(page);
@@ -135,86 +136,95 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      dateTime = showOmniDateTimePicker(
-                          context: context, theme: ThemeData.dark());
-                    });
-                  },
-                  child: const ImageIcon(
-                    AssetImage("assets/icons/timer.png"),
-                    color: Colors.white,
-                  ),
-                ),
-                verticalSpace(25),
-                BlocListener<AddToDoCubit, AddToDoState>(
-                  listener: (context, state) {
-                    if (state is AddToDoSuccessAdding) {
-                      context.pop();
-                    } else if (state is AddToDoFailer) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.error)),
-                      );
-                    }
-                  },
-                  child: InkWell(
-                    onTap: () async {
-                      var format = DateFormat('EEE, h:mm a');
-                      DateTime? formatedDateTime;
-                      formatedDateTime = await dateTime;
-                      if (context
-                          .read<AddToDoCubit>()
-                          .formKey
-                          .currentState!
-                          .validate()) {
-                        context
-                            .read<AddToDoCubit>()
-                            .formKey
-                            .currentState!
-                            .save();
-                        context.read<AddToDoCubit>().addToDo(ToDo(
-                            name: context
-                                .read<AddToDoCubit>()
-                                .nameController
-                                .text,
-                            description: context
-                                .read<AddToDoCubit>()
-                                .descriptionController
-                                .text,
-                            dateTime: format.format(formatedDateTime!)));
-                      } else {
-                        context.read<AddToDoCubit>().autovalidateMode =
-                            AutovalidateMode.always;
-                      }
-
-                      context
-                          .read<AddToDoCubit>()
-                          .descriptionController
-                          .clear();
-                      context.read<AddToDoCubit>().nameController.clear();
+        isTimeSelected = true;
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        dateTime = showOmniDateTimePicker(
+                            context: context, theme: ThemeData.dark());
+                      });
                     },
-                    child: const ImageIcon(
-                      AssetImage("assets/icons/send.png"),
-                      color: MyColors.purpel,
+                    child: ImageIcon(
+                      const AssetImage("assets/icons/timer.png"),
+                      color: isTimeSelected ? Colors.white : Colors.red,
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
-          content: const AddTask(),
-          backgroundColor: MyColors.liteGray,
-          title: Text(
-            Texts.addTask,
-            style: TextStyle(color: Colors.white, fontSize: 25.sp),
-          ),
-        );
+                  verticalSpace(25),
+                  BlocListener<AddToDoCubit, AddToDoState>(
+                    listener: (context, state) {
+                      if (state is AddToDoSuccessAdding) {
+                        context.pop();
+                      } else if (state is AddToDoFailer) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.error)),
+                        );
+                      }
+                    },
+                    child: GestureDetector(
+                      onTap: () async {
+                        var format = DateFormat('EEE, h:mm a');
+                        DateTime? formatedDateTime;
+                        formatedDateTime = await dateTime;
+                        if (context
+                                .read<AddToDoCubit>()
+                                .formKey
+                                .currentState!
+                                .validate() &&
+                            dateTime != null) {
+                          context
+                              .read<AddToDoCubit>()
+                              .formKey
+                              .currentState!
+                              .save();
+                          context.read<AddToDoCubit>().addToDo(ToDo(
+                              name: context
+                                  .read<AddToDoCubit>()
+                                  .nameController
+                                  .text,
+                              description: context
+                                  .read<AddToDoCubit>()
+                                  .descriptionController
+                                  .text,
+                              dateTime: format.format(formatedDateTime!)));
+                        } else {
+                          context.read<AddToDoCubit>().autovalidateMode =
+                              AutovalidateMode.always;
+                        }
+
+                        context
+                            .read<AddToDoCubit>()
+                            .descriptionController
+                            .clear();
+                        context.read<AddToDoCubit>().nameController.clear();
+                        setState(() {
+                          if (dateTime == null) {
+                            isTimeSelected = false;
+                          }
+                        });
+                      },
+                      child: const ImageIcon(
+                        AssetImage("assets/icons/send.png"),
+                        color: MyColors.purpel,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+            content: const AddTask(),
+            backgroundColor: MyColors.liteGray,
+            title: Text(
+              Texts.addTask,
+              style: TextStyle(color: Colors.white, fontSize: 25.sp),
+            ),
+          );
+        });
       },
     );
   }

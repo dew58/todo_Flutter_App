@@ -16,6 +16,7 @@ class Index extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: MyColors.mainBackGround,
         actions: const [Icon(Icons.verified_user)],
         elevation: 0,
         leading: Image.asset("assets/icons/sort.png"),

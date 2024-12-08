@@ -14,6 +14,7 @@ class Welcomeui extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.mainBackGround,
       appBar: AppBar(
+        surfaceTintColor: MyColors.mainBackGround,
         backgroundColor: MyColors.mainBackGround,
         leading: IconButton(
           onPressed: () {
@@ -43,7 +44,7 @@ class Welcomeui extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 verticalSpace(370),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     context.pushNamed(Routers.logIn);
                   },
@@ -65,7 +66,7 @@ class Welcomeui extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(20),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     context.pushNamed(Routers.singUp);
                   },

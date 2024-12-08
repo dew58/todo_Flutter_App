@@ -9,24 +9,38 @@ class NoTodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset("assets/auth/homeimage.png"),
-          verticalSpace(20),
-          Text(
-            Texts.noTaskText,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.sp,
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                verticalSpace(100),
+                Image.asset("assets/auth/homeimage.png"),
+                verticalSpace(20),
+                Text(
+                  Texts.noTaskText,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                verticalSpace(20),
+                Text(
+                  Texts.noTaskText2,
+                  style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                  textAlign: TextAlign.center,
+                ),
+                verticalSpace(200),
+              ],
             ),
           ),
-          verticalSpace(20),
-          Text(Texts.noTaskText2,
-              style: TextStyle(color: Colors.white, fontSize: 15.sp)),
-          verticalSpace(200),
-        ],
+        ),
       ),
     );
   }

@@ -24,6 +24,7 @@ class Signin extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.mainBackGround,
       appBar: AppBar(
+        surfaceTintColor: MyColors.mainBackGround,
         backgroundColor: MyColors.mainBackGround,
         leading: IconButton(
           onPressed: () {
@@ -190,7 +191,7 @@ class Signin extends StatelessWidget {
                   ),
                   verticalSpace(40),
                   Center(
-                    child: InkWell(
+                    child: GestureDetector(
                         onTap: () {
                           context.read<AuthCubit>().signUP(
                                 _emailController.text,
@@ -220,7 +221,7 @@ class Signin extends StatelessWidget {
                   ),
                   verticalSpace(25),
                   Center(
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {},
                       child: Container(
                         width: 327.w,
@@ -264,12 +265,12 @@ class Signin extends StatelessWidget {
                               Texts.alreadyHaveAccount,
                               style: TextStyle(color: Colors.grey),
                             ),
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 context.pushNamed(Routers.logIn);
                               },
-                              child: const InkWell(
-                                child: Text(
+                              child: GestureDetector(
+                                child: const Text(
                                   Texts.loginInLoginPage,
                                   style: TextStyle(color: Colors.white),
                                 ),

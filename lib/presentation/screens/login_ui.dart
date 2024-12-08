@@ -22,6 +22,7 @@ class Loginui extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.mainBackGround,
       appBar: AppBar(
+        surfaceTintColor: MyColors.mainBackGround,
         backgroundColor: MyColors.mainBackGround,
         leading: IconButton(
           onPressed: () {
@@ -142,7 +143,7 @@ class Loginui extends StatelessWidget {
                   ),
                   verticalSpace(70),
                   Center(
-                    child: InkWell(
+                    child: GestureDetector(
                         onTap: () {
                           context.read<AuthCubit>().logIn(
                               _emailController.text, _passwordController.text);
@@ -170,7 +171,7 @@ class Loginui extends StatelessWidget {
                   ),
                   verticalSpace(30),
                   Center(
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {},
                       child: Container(
                         width: 327.w,
@@ -214,8 +215,8 @@ class Loginui extends StatelessWidget {
                               Texts.dontHaveAccount,
                               style: TextStyle(color: Colors.grey),
                             ),
-                            InkWell(
-                              child: InkWell(
+                            GestureDetector(
+                              child: GestureDetector(
                                 onTap: () {
                                   context.pushNamed(Routers.singUp);
                                 },

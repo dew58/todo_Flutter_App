@@ -20,8 +20,9 @@ class _OnbordingUiState extends State<OnbordingUi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: MyColors.mainBackGround,
         backgroundColor: MyColors.mainBackGround,
-        leading: InkWell(
+        leading: GestureDetector(
           onTap: () {
             context.pushNamed(Routers.welcome);
           },
@@ -100,7 +101,7 @@ class _OnbordingUiState extends State<OnbordingUi> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           setState(() {
                             if (_controller.page! >= 1) {
@@ -119,7 +120,7 @@ class _OnbordingUiState extends State<OnbordingUi> {
                         ),
                       ),
                       horizontalSpace(200),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           setState(() {
                             if (_controller.page! < 3) {

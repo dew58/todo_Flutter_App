@@ -21,6 +21,7 @@ class _FocuesState extends State<Focues> {
     return Scaffold(
       backgroundColor: MyColors.mainBackGround,
       appBar: AppBar(
+        surfaceTintColor: MyColors.mainBackGround,
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: MyColors.mainBackGround,
