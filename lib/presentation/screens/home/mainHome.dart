@@ -1,13 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
-import 'package:todo/constans/my_colors.dart';
-import 'package:todo/domain/models/todo_model.dart';
-import 'package:todo/presentation/cubits/add_todo_cubit/add_to_do_cubit.dart';
-import 'package:todo/presentation/screens/home/screens/calendar.dart';
-import 'package:todo/presentation/screens/home/screens/focues.dart';
-import 'package:todo/presentation/screens/home/screens/index.dart';
-import 'package:todo/presentation/screens/home/screens/profile.dart';
+import 'package:todo/core/helper/extenstion.dart';
+import 'package:todo/core/helper/spacing.dart';
+import 'package:todo/presentation/widgets/add_task.dart';
+
+import '../../../core/constans/texts.dart';
+import '../../../core/themes/my_colors.dart';
+import '../../../domain/models/todo_model.dart';
+import '../../cubits/add_todo_cubit/add_to_do_cubit.dart';
+import '../../cubits/login_auth/auth_cubit.dart';
+import 'screens/calendar.dart';
+import 'screens/focues.dart';
+import 'screens/index.dart';
+import 'screens/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,32 +26,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // List of widgets that represent different screens
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
   static final _screens = [
-    BlocBuilder<AddToDoCubit, AddToDoState>(
-      builder: (context, state) {
-        return const Index();
-      },
-    ),
+    const Index(),
     const Calender(),
     const Focues(),
-    const Profile()
+    BlocProvider(
+      create: (context) => AuthCubit(),
+      child: const Profile(),
+    )
   ];
 
-  // Function to handle index change when tapping on an icon
-
   final PageController _myPage = PageController(initialPage: 0);
-
-  final _formKey = GlobalKey<FormState>();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
-  String? description;
-  String? name;
-  late Future<DateTime?> dateTime;
   int currentIndex = 0;
+
+  Future<DateTime?>? dateTime;
+  bool isTimeSelected = true;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _myPage.addListener(() {
       if (_myPage.page!.round() != currentIndex) {
@@ -53,31 +56,30 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  @override
-  void dispose() {
-    _myPage.dispose();
-
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _myPage.dispose();
+  //   context.read<AddToDoCubit>().descriptionController.dispose();
+  //   context.read<AddToDoCubit>().nameController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.mainBackGround,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: BlocProvider(
-        create: (context) => AddToDoCubit(),
-        child: SizedBox(
-          height: 70,
-          width: 70,
-          child: FittedBox(
-            child: FloatingActionButton(
-              onPressed: () {
-                _showTaskDialog();
-              },
-              shape: const CircleBorder(),
-              backgroundColor: MyColors.purpel,
-              child: const Icon(Icons.add, color: Colors.white),
-            ),
+      floatingActionButton: SizedBox(
+        height: 70,
+        width: 70,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {
+              _showTaskDialog(context);
+            },
+            shape: const CircleBorder(),
+            backgroundColor: MyColors.purpel,
+            child: const Icon(Icons.add, color: Colors.white),
           ),
         ),
       ),
@@ -97,7 +99,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      backgroundColor: Colors.black,
       body: Scrollbar(
         child: PageView.builder(
           physics: const NeverScrollableScrollPhysics(),
@@ -111,12 +112,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _listIcon(String name, String icon, bool selected, int page) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         setState(() {
           _myPage.jumpToPage(page);
-
-          // print(_myPage.page);
         });
       },
       child: Column(
@@ -126,176 +125,107 @@ class _HomePageState extends State<HomePage> {
               : Image.asset("assets/icons/${icon}.png"),
           Text(
             name,
-            style: const TextStyle(color: Colors.white, fontSize: 12),
+            style: TextStyle(color: Colors.white, fontSize: 12.sp),
           )
         ],
       ),
     );
   }
 
-  _showTaskDialog() {
+  _showTaskDialog(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          Widget? addTask = Container(
-            height: MediaQuery.sizeOf(context).height * 0.25,
-            width: MediaQuery.sizeOf(context).width,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(16),
-              ),
-            ),
-            child: Form(
-              key: _formKey,
-              autovalidateMode: autovalidateMode,
-              child: Column(
+      context: context,
+      builder: (context) {
+        isTimeSelected = true;
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Task Name",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.white),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.white),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.red),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.red),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                    onSaved: (value) {
-                      name = value;
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        dateTime = showOmniDateTimePicker(
+                            context: context, theme: ThemeData.dark());
+                      });
                     },
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return "Enter the Name of the task";
-                      } else {
-                        return null;
+                    child: ImageIcon(
+                      const AssetImage("assets/icons/timer.png"),
+                      color: isTimeSelected ? Colors.white : Colors.red,
+                    ),
+                  ),
+                  verticalSpace(25),
+                  BlocListener<AddToDoCubit, AddToDoState>(
+                    listener: (context, state) {
+                      if (state is AddToDoSuccessAdding) {
+                        context.pop();
+                      } else if (state is AddToDoFailer) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.error)),
+                        );
                       }
                     },
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Description",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.white),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.white),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.red),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.7, color: Colors.red),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                    onSaved: (value) {
-                      description = value;
-                    },
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return "Enter the Description of the task";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                ],
-              ),
-            ),
-          );
-          return BlocListener<AddToDoCubit, AddToDoState>(
-            listener: (context, state) {
-              if (state is AddToDoSuccessAdding) {
-                // Handle success (e.g., close the dialog or show a message)
-                Navigator.of(context).pop();
-                context.read<AddToDoCubit>().getTodos(); // Close the dialog
-              } else if (state is AddToDoFailer) {
-                // Handle failure (e.g., show an error message)
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.error)),
-                );
-              }
-            },
-            child: AlertDialog(
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          dateTime = showOmniDateTimePicker(
-                              context: context, theme: ThemeData.dark());
-                        });
-                      },
-                      child: const ImageIcon(
-                        AssetImage("assets/icons/timer.png"),
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
+                    child: GestureDetector(
+                      onTap: () async {
+                        var format = DateFormat('EEE, h:mm a');
+                        DateTime? formatedDateTime;
+                        formatedDateTime = await dateTime;
+                        if (context
+                                .read<AddToDoCubit>()
+                                .formKey
+                                .currentState!
+                                .validate() &&
+                            dateTime != null) {
+                          context
+                              .read<AddToDoCubit>()
+                              .formKey
+                              .currentState!
+                              .save();
                           context.read<AddToDoCubit>().addToDo(ToDo(
-                              name: name!,
-                              description: description!,
-                              dateTime: dateTime.toString()));
-                          setState(() {});
+                              name: context
+                                  .read<AddToDoCubit>()
+                                  .nameController
+                                  .text,
+                              description: context
+                                  .read<AddToDoCubit>()
+                                  .descriptionController
+                                  .text,
+                              dateTime: format.format(formatedDateTime!)));
                         } else {
-                          autovalidateMode = AutovalidateMode.always;
+                          context.read<AddToDoCubit>().autovalidateMode =
+                              AutovalidateMode.always;
                         }
+
+                        context
+                            .read<AddToDoCubit>()
+                            .descriptionController
+                            .clear();
+                        context.read<AddToDoCubit>().nameController.clear();
+                        setState(() {
+                          if (dateTime == null) {
+                            isTimeSelected = false;
+                          }
+                        });
                       },
                       child: const ImageIcon(
                         AssetImage("assets/icons/send.png"),
                         color: MyColors.purpel,
                       ),
                     ),
-                  ],
-                )
-              ],
-              content: addTask,
-              backgroundColor: MyColors.liteGray,
-              title: const Text(
-                "Add Task",
-                style: TextStyle(color: Colors.white, fontSize: 25),
-              ),
+                  ),
+                ],
+              )
+            ],
+            content: const AddTask(),
+            backgroundColor: MyColors.liteGray,
+            title: Text(
+              Texts.addTask,
+              style: TextStyle(color: Colors.white, fontSize: 25.sp),
             ),
           );
         });
+      },
+    );
   }
 }

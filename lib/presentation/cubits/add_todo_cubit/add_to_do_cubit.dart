@@ -1,41 +1,41 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/domain/models/todo_model.dart';
+
+import '../../../main.dart';
 
 part 'add_to_do_state.dart';
 
 class AddToDoCubit extends Cubit<AddToDoState> {
-  AddToDoCubit() : super(AddToDoInitial());
+  AddToDoCubit() : super(AddToDoInitial()) {
+    // getTodos();
+  }
+  List<ToDo> todos = [];
+  final formKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
-  addToDo(ToDo todo) async {
-    emit(AddToDoLoading());
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  addToDo(ToDo todo) {
     try {
-      var box = Hive.box<ToDo>("myTodo");
-      await box.add(todo);
+      emit(AddToDoDummy());
+      box.add(todo);
       emit(AddToDoSuccessAdding());
       getTodos();
     } catch (e) {
       emit(AddToDoFailer(error: e.toString()));
-      print(e);
     }
   }
 
   getTodos() {
-    emit(AddToDoLoading());
     try {
-      var box = Hive.box<ToDo>("myTodo");
-      var todos = box.values.toList();
-      emit(AddToDoSuccessGetting(todos: todos));
+      emit(AddToDoDummy());
+      todos = box.values.toList();
+      emit(AddToDoSuccess());
     } catch (e) {
       emit(AddToDoFailer(error: e.toString()));
-      print(e);
     }
-  }
-
-  deleteToDo(dynamic key) async {
-    emit(AddToDoLoading());
-    var box = Hive.box<ToDo>("myTodo");
-    await box.delete(key);
   }
 }

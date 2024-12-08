@@ -9,17 +9,11 @@ sealed class AddToDoState extends Equatable {
 
 final class AddToDoInitial extends AddToDoState {}
 
-final class AddToDoLoading extends AddToDoState {}
+final class AddToDoSuccess extends AddToDoState {}
+
+final class AddToDoDummy extends AddToDoState {}
 
 final class AddToDoSuccessAdding extends AddToDoState {}
-
-// ignore: must_be_immutable
-final class AddToDoSuccessGetting extends AddToDoState {
-  List<ToDo> todos;
-  AddToDoSuccessGetting({required this.todos});
-}
-
-final class AddToDoSuccessDeleting extends AddToDoState {}
 
 // ignore: must_be_immutable
 final class AddToDoFailer extends AddToDoState {

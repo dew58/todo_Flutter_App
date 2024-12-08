@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "todo (Flutter Pixel 3)",
+            "program": "lib/main.dart",
+            "deviceId": "192.168.189.101:5555",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
