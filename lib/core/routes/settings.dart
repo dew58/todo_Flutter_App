@@ -4,4 +4,5 @@ class Routers {
   static const String welcome = "/welcome";
   static const String onBorder = "/on-border";
   static const String home = "/home";
+  static const String editTask = "/edit-task";
 }

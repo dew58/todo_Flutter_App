@@ -63,4 +63,15 @@ class Texts {
   static const calendar = "Calendar";
   static const today = "Today";
   static const completed = "Completed";
+
+  static const taskTime = "Task Time:";
+  static const editTask = "Edit Task";
+  static const deleteTask = "Delete Task";
+  static const editTaskTitel = "Edit Task title";
+
+  static const cancel = "Cancel";
+  static const edit = "Edit";
+  static const delete = "Delete";
+
+  static const deleteMessage = "Are You sure you want to delete this task?";
 }
