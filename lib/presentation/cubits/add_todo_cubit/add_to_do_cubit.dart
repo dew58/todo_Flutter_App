@@ -21,7 +21,7 @@ class AddToDoCubit extends Cubit<AddToDoState> {
   addToDo(ToDo todo) {
     try {
       emit(AddToDoDummy());
-      box.add(todo);
+      box!.add(todo);
       emit(AddToDoSuccessAdding());
       getTodos();
     } catch (e) {
@@ -32,7 +32,17 @@ class AddToDoCubit extends Cubit<AddToDoState> {
   getTodos() {
     try {
       emit(AddToDoDummy());
-      todos = box.values.toList();
+      todos = box!.values.toList();
+      emit(AddToDoSuccess());
+    } catch (e) {
+      emit(AddToDoFailer(error: e.toString()));
+    }
+  }
+
+  editToDo(int key, ToDo todo) {
+    try {
+      emit(AddToDoDummy());
+      box!.put(key, todo);
       emit(AddToDoSuccess());
     } catch (e) {
       emit(AddToDoFailer(error: e.toString()));

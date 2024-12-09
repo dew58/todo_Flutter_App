@@ -10,7 +10,9 @@ import 'core/routes/app_router.dart';
 import 'firebase_options.dart';
 
 late String initialRoute;
-late Box<ToDo> box;
+Box<ToDo>? box;
+final ValueNotifier<bool> hiveBoxReady = ValueNotifier(false);
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -25,6 +27,7 @@ Future<void> main() async {
     } else {
       var uId = FirebaseAuth.instance.currentUser!.uid;
       box = await Hive.openBox('myTodo$uId');
+      hiveBoxReady.value = true;
       debugPrint("open a box myTodo$uId");
     }
   });

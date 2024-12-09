@@ -15,8 +15,7 @@ class AddTask extends StatelessWidget {
     return BlocListener<AddToDoCubit, AddToDoState>(
       listener: (context, state) {},
       child: Container(
-        height: 200.h,
-        width: MediaQuery.sizeOf(context).width,
+        height: 160.h,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(16),
