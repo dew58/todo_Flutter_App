@@ -21,57 +21,61 @@ class Texts {
   static const String welcomeSecondText =
       "Please login to your account or create new account to continue";
 
-  static const logInInWelcomePage = "LOGIN";
+  static const String logInInWelcomePage = "LOGIN";
   static const creatAccount = "CREATE ACCOUNT";
 
-  static const skip = "SKIP";
-  static const back = "BACK";
-  static const next = "NEXT";
+  static const String skip = "SKIP";
+  static const String back = "BACK";
+  static const String next = "NEXT";
 
-  static const loginInLoginPage = "Login";
-  static const userNameLoginPage = "Username";
-  static const passwordLoginPage = "Password";
-  static const register = "Register";
+  static const String loginInLoginPage = "Login";
+  static const String userNameLoginPage = "Username";
+  static const String passwordLoginPage = "Password";
+  static const String register = "Register";
 
-  static const confirmPassword = "Confirm Password";
+  static const String confirmPassword = "Confirm Password";
 
-  static const loginWithGoogle = "Login with Google";
-  static const registWithGoogle = "Register with Google";
+  static const String loginWithGoogle = "Login with Google";
+  static const String registWithGoogle = "Register with Google";
 
-  static const dontHaveAccount = "Don't have an account?";
-  static const alreadyHaveAccount = "Already have an account?";
+  static const String dontHaveAccount = "Don't have an account?";
+  static const String alreadyHaveAccount = "Already have an account?";
 
-  static const home = "Home";
-  static const addTask = "Add Task";
-  static const taskName = "Task Name";
-  static const description = "Description";
-  static const noTaskText = "What do you want to do today?";
-  static const noTaskText2 = "Tap + to add your tasks";
+  static const String home = "Home";
+  static const String addTask = "Add Task";
+  static const String taskName = "Task Name";
+  static const String description = "Description";
+  static const String noTaskText = "What do you want to do today?";
+  static const String noTaskText2 = "Tap + to add your tasks";
 
-  static const profile = "Profile";
-  static const settings = "Settings";
-  static const account = "Account";
+  static const String profile = "Profile";
+  static const String settings = "Settings";
+  static const String account = "Account";
 
-  static const upTodo = "Uptodo";
+  static const String upTodo = "Uptodo";
 
-  static const focus = "Focus Mode";
-  static const focusText =
+  static const String focus = "Focus Mode";
+  static const String focusText =
       "While your focus mode is on, all of your\nnotifications will be off";
-  static const startFocus = "Start Focusing";
-  static const stopFocus = "Stop Focusing";
+  static const String startFocus = "Start Focusing";
+  static const String stopFocus = "Stop Focusing";
 
-  static const calendar = "Calendar";
-  static const today = "Today";
-  static const completed = "Completed";
+  static const String calendar = "Calendar";
+  static const String today = "Today";
+  static const String completed = "Completed";
 
-  static const taskTime = "Task Time:";
-  static const editTask = "Edit Task";
-  static const deleteTask = "Delete Task";
-  static const editTaskTitel = "Edit Task title";
+  static const String taskTime = "Task Time:";
+  static const String editTask = "Edit Task";
+  static const String deleteTask = "Delete Task";
+  static const String editTaskTitel = "Edit Task title";
 
-  static const cancel = "Cancel";
-  static const edit = "Edit";
-  static const delete = "Delete";
+  static const String cancel = "Cancel";
+  static const String edit = "Edit";
+  static const String delete = "Delete";
 
-  static const deleteMessage = "Are You sure you want to delete this task?";
+  static const String deleteMessage =
+      "Are You sure you want to delete this task?";
+
+  static const String editNameDialogTitle = "Change account name";
+  static const String editNameTextHint = "Enter Your New Name";
 }

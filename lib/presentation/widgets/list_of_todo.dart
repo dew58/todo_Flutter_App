@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo/domain/repositories/todo_usre_repo.dart';
 
 import '../../core/themes/my_colors.dart';
 import '../../domain/models/todo_model.dart';
@@ -53,8 +54,9 @@ class ListOfTodo extends StatelessWidget {
                         child: Row(
                           children: [
                             IconButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   todos[index].delete();
+                                  await TodoUsreRepo.addDoneTask();
                                   context.read<AddToDoCubit>().getTodos();
                                 },
                                 icon: const Icon(Icons.circle)),
