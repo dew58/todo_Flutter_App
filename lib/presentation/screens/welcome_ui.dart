@@ -51,9 +51,9 @@ class Welcomeui extends StatelessWidget {
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 0.8,
                     height: MediaQuery.sizeOf(context).height * 0.07,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: MyColors.lighterPurpel,
-                      borderRadius: BorderRadius.all(
+                      borderRadius: const BorderRadius.all(
                         Radius.circular(4),
                       ),
                     ),

@@ -201,9 +201,9 @@ class Signin extends StatelessWidget {
                         child: Container(
                           width: 327.w,
                           height: 50.h,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: MyColors.purpel,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(4),
                             ),
                           ),

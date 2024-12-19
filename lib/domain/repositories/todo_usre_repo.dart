@@ -20,13 +20,16 @@ class TodoUsreRepo {
   }
 
   changeName(var newName) async {
+    appUserReady.value = false;
     await firebaseAuth?.updateDisplayName(newName);
     appUser.name = newName;
+    appUserReady.value = true;
   }
 
   changeImage(var newImage) async {
     await firebaseAuth?.updatePhotoURL(newImage);
     appUser.image = newImage;
+    appUserReady.value = true;
   }
 
   changePassword(var newPassword) async {

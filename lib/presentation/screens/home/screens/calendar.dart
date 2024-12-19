@@ -31,7 +31,7 @@ class Calender extends StatelessWidget {
               Container(
                 width: MediaQuery.sizeOf(context).width,
                 height: MediaQuery.sizeOf(context).height * 0.17,
-                decoration: const BoxDecoration(color: MyColors.liteGray),
+                decoration: BoxDecoration(color: MyColors.liteGray),
                 child: Column(children: [
                   HorizontalWeekCalendar(
                     minDate: DateTime(2023, 12, 31),
@@ -59,9 +59,9 @@ class Calender extends StatelessWidget {
               Container(
                 width: MediaQuery.sizeOf(context).width * 0.75,
                 height: MediaQuery.sizeOf(context).height * 0.1,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: MyColors.liteGray,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(4),
                   ),
                 ),

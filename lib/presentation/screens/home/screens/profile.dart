@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo/core/helper/extenstion.dart';
 import 'package:todo/core/helper/spacing.dart';
 import 'package:todo/main.dart';
 
 import '../../../../core/constans/texts.dart';
+import '../../../../core/routes/settings.dart';
 import '../../../../core/themes/my_colors.dart';
 import '../../../../domain/repositories/todo_usre_repo.dart';
 import '../../../cubits/login_auth/auth_cubit.dart';
@@ -13,9 +17,14 @@ import '../../../widgets/profile_widgets/alert_dialog_edit_image.dart';
 import '../../../widgets/profile_widgets/alert_dialog_edit_name.dart';
 import '../../../widgets/profile_widgets/alert_dialog_edit_password.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     int numberOfDoneTasks = TodoUsreRepo.getDoneTasks();
@@ -47,9 +56,11 @@ class Profile extends StatelessWidget {
                       Center(
                         child: Column(children: [
                           CircleAvatar(
+                            backgroundColor: MyColors.mainBackGround,
                             radius: 35,
-                            backgroundImage: AssetImage(
-                                appUser.image ?? "assets/noImageUser.jpg"),
+                            backgroundImage: (appUser.image != null)
+                                ? FileImage(File(appUser.image!))
+                                : const AssetImage("assets/icons/userx4.png"),
                           ),
                           Text(
                             appUser.name ?? " ",
@@ -62,9 +73,9 @@ class Profile extends StatelessWidget {
                                   width: MediaQuery.sizeOf(context).width * 0.4,
                                   height:
                                       MediaQuery.sizeOf(context).height * 0.07,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     color: MyColors.liteGray,
-                                    borderRadius: BorderRadius.all(
+                                    borderRadius: const BorderRadius.all(
                                       Radius.circular(4),
                                     ),
                                   ),
@@ -80,15 +91,15 @@ class Profile extends StatelessWidget {
                                   width: MediaQuery.sizeOf(context).width * 0.4,
                                   height:
                                       MediaQuery.sizeOf(context).height * 0.07,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     color: MyColors.liteGray,
-                                    borderRadius: BorderRadius.all(
+                                    borderRadius: const BorderRadius.all(
                                       Radius.circular(4),
                                     ),
                                   ),
                                   child: Center(
                                     child: Text(
-                                      "{$numberOfDoneTasks} Task done",
+                                      "$numberOfDoneTasks Task done",
                                       style:
                                           const TextStyle(color: Colors.white),
                                     ),
@@ -112,9 +123,10 @@ class Profile extends StatelessWidget {
                                 ),
                               ),
                               ProfileItem().profileItem(
-                                  "assets/icons/setting-2.png",
-                                  "App Settings",
-                                  () {}),
+                                  "assets/icons/setting-2.png", "App Settings",
+                                  () {
+                                context.pushNamed(Routers.setting);
+                              }),
                               verticalSpace(15),
                               Padding(
                                 padding: EdgeInsets.only(left: 20.w),
@@ -125,28 +137,31 @@ class Profile extends StatelessWidget {
                               ),
                               ProfileItem().profileItem("assets/icons/user.png",
                                   "Change account name", () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const AlertDialogEditName();
-                                    });
+                                setState(() {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const AlertDialogEditName();
+                                      });
+                                  setState(() {});
+                                });
                               }),
                               ProfileItem().profileItem("assets/icons/key.png",
                                   "Change account password", () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const AlertDialogEditPassword();
-                                    });
+                                setState(() {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const AlertDialogEditPassword();
+                                      });
+                                });
                               }),
                               ProfileItem().profileItem(
                                   "assets/icons/camera.png",
                                   "Change account image", () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const AlertDialogEditImage();
-                                    });
+                                setState(() {
+                                  showBottomDialogImage(context);
+                                });
                               }),
                               verticalSpace(10),
                               Padding(
@@ -179,7 +194,7 @@ class Profile extends StatelessWidget {
                 ),
               );
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );

@@ -43,8 +43,8 @@ class ListOfTodo extends StatelessWidget {
                     },
                     child: Container(
                       height: 72.h,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(4),
                           ),
                           color: MyColors.liteGray),

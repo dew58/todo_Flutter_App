@@ -135,10 +135,10 @@ class _OnbordingUiState extends State<OnbordingUi> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width * 0.17,
                           height: MediaQuery.sizeOf(context).height * 0.06,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                               color: MyColors.lighterPurpel,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
+                                  const BorderRadius.all(Radius.circular(4))),
                           child: const Center(
                             child: Text(
                               Texts.next,

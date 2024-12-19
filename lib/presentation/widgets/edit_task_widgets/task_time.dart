@@ -58,9 +58,9 @@ class TaskTime extends StatelessWidget {
           child: Container(
             height: 40.h,
             width: 110.w,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: MyColors.liteGray,
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(6),
               ),
             ),

@@ -41,10 +41,12 @@ Future<void> main() async {
     }
   });
 
-  runApp(BlocProvider(
-    create: (context) => AddToDoCubit(),
-    child: MyApp(
-      appRouter: AppRouter(),
+  runApp(
+    BlocProvider(
+      create: (context) => AddToDoCubit(),
+      child: MyApp(
+        appRouter: AppRouter(),
+      ),
     ),
-  ));
+  );
 }

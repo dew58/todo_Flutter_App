@@ -78,4 +78,8 @@ class Texts {
 
   static const String editNameDialogTitle = "Change account name";
   static const String editNameTextHint = "Enter Your New Name";
+
+  static const String editImageDialogTitle = "Change account image";
+  static const String takePic = "Take picture";
+  static const String importFromGallery = "Import from gallery";
 }

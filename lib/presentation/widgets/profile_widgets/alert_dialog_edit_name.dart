@@ -29,68 +29,78 @@ class AlertDialogEditName extends StatelessWidget {
               fontWeight: FontWeight.bold),
         ),
       ),
-      content: TextField(
-        controller: context.read<AddToDoCubit>().editNameController,
-        decoration: InputDecoration(
-          hintText: Texts.editNameTextHint,
-          hintStyle: const TextStyle(color: Colors.grey),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 0.7, color: MyColors.liteGray),
-            borderRadius: BorderRadius.circular(4),
+      content: SizedBox(
+        width: 327.w,
+        child: TextFormField(
+          controller: context.read<AddToDoCubit>().editNameController,
+          decoration: InputDecoration(
+            hintText: Texts.editNameTextHint,
+            hintStyle: const TextStyle(color: Colors.grey),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 0.7, color: MyColors.liteGray),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 0.7, color: Colors.white),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 0.7, color: Colors.red),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 0.7, color: Colors.red),
+              borderRadius: BorderRadius.circular(4),
+            ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 0.7, color: Colors.white),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 0.7, color: Colors.red),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 0.7, color: Colors.red),
-            borderRadius: BorderRadius.circular(4),
-          ),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       actions: [
-        GestureDetector(
-          onTap: () {
-            context.pop();
-          },
-          child: SizedBox(
-            height: 50.h,
-            width: 105.w,
-            child: Center(
-              child: Text(
-                Texts.cancel,
-                style: TextStyle(color: MyColors.purpel, fontSize: 16.sp),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                context.pop();
+              },
+              child: SizedBox(
+                height: 50.h,
+                width: 105.w,
+                child: Center(
+                  child: Text(
+                    Texts.cancel,
+                    style: TextStyle(color: MyColors.purpel, fontSize: 16.sp),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            TodoUsreRepo().changeName(
-                context.read<AddToDoCubit>().editNameController.text);
-            context.pop();
-          },
-          child: Container(
-            height: 50.h,
-            width: 105.w,
-            decoration: const BoxDecoration(
-              color: MyColors.purpel,
-              borderRadius: BorderRadius.all(
-                Radius.circular(4),
+            GestureDetector(
+              onTap: () {
+                TodoUsreRepo().changeName(
+                    context.read<AddToDoCubit>().editNameController.text);
+                context.read<AddToDoCubit>().editNameController.clear();
+                context.pop();
+              },
+              child: Container(
+                height: 50.h,
+                width: 105.w,
+                decoration: BoxDecoration(
+                  color: MyColors.purpel,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(4),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    Texts.edit,
+                    style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                  ),
+                ),
               ),
             ),
-            child: Center(
-              child: Text(
-                Texts.edit,
-                style: TextStyle(color: Colors.white, fontSize: 16.sp),
-              ),
-            ),
-          ),
-        ),
+          ],
+        )
       ],
     );
   }
