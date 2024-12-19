@@ -33,8 +33,8 @@ class AddTask extends StatelessWidget {
                     hintText: Texts.taskName,
                     hintStyle: const TextStyle(color: Colors.grey),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          width: 0.7, color: MyColors.liteGray),
+                      borderSide:
+                          BorderSide(width: 0.7, color: MyColors.liteGray),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -75,8 +75,8 @@ class AddTask extends StatelessWidget {
                     hintText: Texts.description,
                     hintStyle: const TextStyle(color: Colors.grey),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          width: 0.7, color: MyColors.liteGray),
+                      borderSide:
+                          BorderSide(width: 0.7, color: MyColors.liteGray),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     focusedBorder: OutlineInputBorder(

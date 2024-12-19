@@ -86,9 +86,9 @@ class EditTaskButton extends StatelessWidget {
                     child: Container(
                       height: 50.h,
                       width: 105.w,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: MyColors.purpel,
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(4),
                         ),
                       ),
@@ -108,9 +108,9 @@ class EditTaskButton extends StatelessWidget {
       child: Container(
         height: 50.h,
         width: 330.w,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: MyColors.purpel,
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(4),
           ),
         ),

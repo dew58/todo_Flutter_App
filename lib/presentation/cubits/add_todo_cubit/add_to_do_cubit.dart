@@ -17,6 +17,7 @@ class AddToDoCubit extends Cubit<AddToDoState> {
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController editNameController = TextEditingController();
 
   addToDo(ToDo todo) {
     try {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constans/texts.dart';
@@ -20,7 +22,15 @@ class _IndexState extends State<Index> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: MyColors.mainBackGround,
-        actions: const [Icon(Icons.verified_user)],
+        actions: [
+          CircleAvatar(
+            backgroundColor: MyColors.mainBackGround,
+            radius: 35,
+            backgroundImage: (appUser.image != null)
+                ? FileImage(File(appUser.image!))
+                : const AssetImage("assets/icons/userx4.png"),
+          ),
+        ],
         elevation: 0,
         leading: Image.asset("assets/icons/sort.png"),
         title: const Center(

@@ -74,9 +74,9 @@ class DeleteTask extends StatelessWidget {
                       context.read<AddToDoCubit>().todos[index].delete();
                     },
                     child: Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: MyColors.purpel,
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(4),
                         ),
                       ),

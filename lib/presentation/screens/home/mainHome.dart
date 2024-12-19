@@ -208,8 +208,8 @@ class _HomePageState extends State<HomePage> {
                           }
                         });
                       },
-                      child: const ImageIcon(
-                        AssetImage("assets/icons/send.png"),
+                      child: ImageIcon(
+                        const AssetImage("assets/icons/send.png"),
                         color: MyColors.purpel,
                       ),
                     ),
