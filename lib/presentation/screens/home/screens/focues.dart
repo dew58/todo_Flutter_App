@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/core/helper/spacing.dart';
 import '../../../../core/constans/texts.dart';
@@ -15,6 +16,30 @@ class Focues extends StatefulWidget {
 class _FocuesState extends State<Focues> {
   bool timerFlag = false;
   final CountDownController _controller = CountDownController();
+  bool _isDoNotDisturb = true;
+
+  Future<void> _toggleDoNotDisturb() async {
+    if (_isDoNotDisturb) {
+      await FlutterDnd.setInterruptionFilter(
+          FlutterDnd.INTERRUPTION_FILTER_ALL);
+    } else {
+      await FlutterDnd.setInterruptionFilter(
+          FlutterDnd.INTERRUPTION_FILTER_NONE);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _requestDoNotDisturbPermission();
+  }
+
+  Future<void> _requestDoNotDisturbPermission() async {
+    final isGranted = await FlutterDnd.isNotificationPolicyAccessGranted;
+    if (isGranted != null && !isGranted) {
+      FlutterDnd.gotoPolicySettings();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,18 +112,19 @@ class _FocuesState extends State<Focues> {
               ),
               verticalSpace(15),
               ElevatedButton(
-                onPressed: () {
-                  (timerFlag)
-                      ? setState(() {
-                          _controller.pause();
-                          timerFlag = false;
-                        })
-                      :
-                      //click to start
-                      setState(() {
-                          _controller.start();
-                          timerFlag = true;
-                        });
+                onPressed: () async {
+                  setState(() {
+                    _isDoNotDisturb = !_isDoNotDisturb;
+                  });
+                  await _toggleDoNotDisturb();
+                  setState(() {
+                    if (timerFlag) {
+                      _controller.pause();
+                    } else {
+                      _controller.start();
+                    }
+                    timerFlag = !timerFlag;
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: MyColors.purpel,
