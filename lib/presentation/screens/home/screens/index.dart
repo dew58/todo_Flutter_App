@@ -19,58 +19,71 @@ class Index extends StatefulWidget {
 class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: MyColors.mainBackGround,
-        actions: [
-          CircleAvatar(
+    return ValueListenableBuilder(
+      valueListenable: appUserReady,
+      builder: (context, isReady, child) {
+        if (isReady) {
+          return Scaffold(
+            appBar: AppBar(
+              surfaceTintColor: MyColors.mainBackGround,
+              actions: [
+                CircleAvatar(
+                  backgroundColor: MyColors.mainBackGround,
+                  radius: 20,
+                  backgroundImage: (appUser.image != null)
+                      ? FileImage(File(appUser.image!))
+                      : const AssetImage("assets/icons/userx4.png"),
+                ),
+              ],
+              elevation: 0,
+              leading: Image.asset("assets/icons/sort.png"),
+              title: const Center(
+                child: Text(
+                  Texts.home,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              backgroundColor: MyColors.mainBackGround,
+            ),
             backgroundColor: MyColors.mainBackGround,
-            radius: 35,
-            backgroundImage: (appUser.image != null)
-                ? FileImage(File(appUser.image!))
-                : const AssetImage("assets/icons/userx4.png"),
-          ),
-        ],
-        elevation: 0,
-        leading: Image.asset("assets/icons/sort.png"),
-        title: const Center(
-          child: Text(
-            Texts.home,
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        backgroundColor: MyColors.mainBackGround,
-      ),
-      backgroundColor: MyColors.mainBackGround,
-      body: ValueListenableBuilder(
-          valueListenable: hiveBoxReady,
-          builder: (context, isReady, child) {
-            if (isReady) {
-              return BlocBuilder<AddToDoCubit, AddToDoState>(
-                  builder: (context, state) {
-                context.read<AddToDoCubit>().getTodos();
-                print("get todos in the bloc builder");
+            body: ValueListenableBuilder(
+                valueListenable: hiveBoxReady,
+                builder: (context, isReady, child) {
+                  if (isReady) {
+                    return BlocBuilder<AddToDoCubit, AddToDoState>(
+                        builder: (context, state) {
+                      context.read<AddToDoCubit>().getTodos();
+                      print("get todos in the bloc builder");
 
-                if (state is AddToDoSuccess ||
-                    state is AddToDoInitial ||
-                    state is AddToDoSuccessAdding) {
-                  var todos = context.read<AddToDoCubit>().todos;
-                  if (todos.isEmpty) {
-                    return const NoTodo();
+                      if (state is AddToDoSuccess ||
+                          state is AddToDoInitial ||
+                          state is AddToDoSuccessAdding) {
+                        var todos = context.read<AddToDoCubit>().todos;
+                        if (todos.isEmpty) {
+                          return const NoTodo();
+                        } else {
+                          return ListOfTodo(
+                            context: context,
+                            todos: todos,
+                          );
+                        }
+                      } else {
+                        return const NoTodo();
+                      }
+                    });
                   } else {
-                    return ListOfTodo(
-                      context: context,
-                      todos: todos,
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   }
-                } else {
-                  return const NoTodo();
-                }
-              });
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          }),
+                }),
+          );
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 }
