@@ -1,8 +1,10 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/core/helper/spacing.dart';
 import '../../../../core/constans/texts.dart';
+import '../../../../core/helper/DND.dart';
 import '../../../../core/themes/my_colors.dart';
 
 class Focues extends StatefulWidget {
@@ -15,6 +17,13 @@ class Focues extends StatefulWidget {
 class _FocuesState extends State<Focues> {
   bool timerFlag = false;
   final CountDownController _controller = CountDownController();
+
+  void openSettings() async {
+    await LaunchApp.openApp(
+      androidPackageName: 'com.android.settings',
+      iosUrlScheme: 'App-Prefs:',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,16 +96,19 @@ class _FocuesState extends State<Focues> {
               ),
               verticalSpace(15),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   (timerFlag)
-                      ? setState(() {
+                      ? setState(() async {
                           _controller.pause();
+                          await DoNotDisturb.disableDND();
                           timerFlag = false;
                         })
                       :
                       //click to start
-                      setState(() {
+                      setState(() async {
                           _controller.start();
+                          openSettings();
+                          await DoNotDisturb.enableDND();
                           timerFlag = true;
                         });
                 },
