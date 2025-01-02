@@ -16,9 +16,9 @@ import '../../../domain/models/todo_model.dart';
 class TaskTime extends StatelessWidget {
   int index;
   TaskTime({
-    Key? key,
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   Future<DateTime?>? dateTime;
 
