@@ -120,6 +120,7 @@ class Signin extends StatelessWidget {
                     height: 50.h,
                     child: TextField(
                       controller: _passwordController,
+                      obscureText: true,
                       decoration: InputDecoration(
                         hintText: "Enter Your password",
                         hintStyle: const TextStyle(color: Colors.grey),
@@ -161,6 +162,7 @@ class Signin extends StatelessWidget {
                     width: 327.w,
                     height: 50.h,
                     child: TextField(
+                      obscureText: true,
                       controller: _confirmpasswordController,
                       decoration: InputDecoration(
                         hintText: "Confirm your password",

@@ -49,18 +49,27 @@ class _IndexState extends State<Index> {
               ),
             ),
             appBar: AppBar(
+              centerTitle: true,
+              automaticallyImplyLeading: false,
               surfaceTintColor: MyColors.mainBackGround,
               actions: [
-                CircleAvatar(
-                  backgroundColor: MyColors.mainBackGround,
-                  radius: 30,
-                  backgroundImage: (appUser.image != null)
-                      ? FileImage(File(appUser.image!))
-                      : const AssetImage("assets/icons/userx4.png"),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: CircleAvatar(
+                    backgroundColor: MyColors.mainBackGround,
+                    radius: 24,
+                    backgroundImage: (appUser.image != null)
+                        ? FileImage(File(appUser.image!))
+                        : const AssetImage("assets/icons/userx4.png"),
+                  ),
                 ),
               ],
               elevation: 0,
-              leading: Image.asset("assets/icons/sort.png"),
+              leading: CircleAvatar(
+                backgroundColor: MyColors.mainBackGround,
+                radius: 24,
+              ),
+              // Image.asset("assets/icons/sort.png"),
               title: const Center(
                 child: Text(
                   Texts.home,

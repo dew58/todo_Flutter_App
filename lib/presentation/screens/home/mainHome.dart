@@ -47,13 +47,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   _myPage.dispose();
-  //   context.read<AddToDoCubit>().descriptionController.dispose();
-  //   context.read<AddToDoCubit>().nameController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _myPage.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         color: MyColors.liteGray,
         elevation: 0,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _listIcon("Index", "home", true, 0),
             _listIcon("Focuse", "clock", false, 1),
