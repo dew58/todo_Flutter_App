@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo/core/helper/spacing.dart';
 import 'package:todo/domain/repositories/todo_usre_repo.dart';
 
 import '../../core/themes/my_colors.dart';
@@ -64,15 +65,17 @@ class ListOfTodo extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.68,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     todos[index].name,
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 12.sp),
+                                        color: Colors.white, fontSize: 14.sp),
                                     overflow: TextOverflow.fade,
                                     maxLines: 1,
                                     softWrap: true,
                                   ),
+                                  verticalSpace(5),
                                   Text(
                                     todos[index].dateTime,
                                     style: TextStyle(

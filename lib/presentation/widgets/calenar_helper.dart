@@ -384,7 +384,7 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                                 : () {
                                     _onBackClick();
                                   },
-                            child: Row(
+                            child: const Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(Icons.arrow_back_ios_new,
@@ -417,7 +417,7 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                                 : () {
                                     _onNextClick();
                                   },
-                            child: Row(
+                            child: const Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(Icons.arrow_forward_ios,
