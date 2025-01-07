@@ -15,7 +15,7 @@ import '../../../cubits/login_auth/auth_cubit.dart';
 import '../../../widgets/profile_item.dart';
 import '../../../widgets/profile_widgets/alert_dialog_edit_image.dart';
 import '../../../widgets/profile_widgets/alert_dialog_edit_name.dart';
-import '../../../widgets/profile_widgets/alert_dialog_edit_password.dart';
+// import '../../../widgets/profile_widgets/alert_dialog_edit_password.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -56,12 +56,14 @@ class _ProfileState extends State<Profile> {
                       Center(
                         child: Column(children: [
                           CircleAvatar(
-                            backgroundColor: MyColors.mainBackGround,
-                            radius: 35,
-                            backgroundImage: (appUser.image != null)
-                                ? FileImage(File(appUser.image!))
-                                : const AssetImage("assets/icons/userx4.png"),
-                          ),
+                              backgroundColor: MyColors.mainBackGround,
+                              radius: 40,
+                              backgroundImage: (appUser.image != null)
+                                  ? (appUser.image!.startsWith('http')
+                                      ? NetworkImage(appUser.image!)
+                                      : FileImage(File(appUser.image!)))
+                                  : const AssetImage(
+                                      "assets/icons/userx4.png")),
                           Text(
                             appUser.name ?? " ",
                             style: const TextStyle(color: Colors.white),
@@ -146,16 +148,16 @@ class _ProfileState extends State<Profile> {
                                   setState(() {});
                                 });
                               }),
-                              ProfileItem().profileItem("assets/icons/key.png",
-                                  "Change account password", () {
-                                setState(() {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return const AlertDialogEditPassword();
-                                      });
-                                });
-                              }),
+                              // ProfileItem().profileItem("assets/icons/key.png",
+                              //     "Change account password", () {
+                              //   setState(() {
+                              //     showDialog(
+                              //         context: context,
+                              //         builder: (context) {
+                              //           return const AlertDialogEditPassword();
+                              //         });
+                              //   });
+                              // }),
                               ProfileItem().profileItem(
                                   "assets/icons/camera.png",
                                   "Change account image", () {

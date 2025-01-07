@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/core/helper/extenstion.dart';
 import 'package:todo/core/helper/spacing.dart';
 
-import '../../core/themes/my_colors.dart';
+import '../../../core/themes/my_colors.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});

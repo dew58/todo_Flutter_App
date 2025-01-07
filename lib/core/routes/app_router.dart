@@ -6,7 +6,7 @@ import '../../presentation/cubits/login_auth/auth_cubit.dart';
 import '../../presentation/screens/home/mainHome.dart';
 import '../../presentation/screens/login_ui.dart';
 import '../../presentation/screens/onbording_ui.dart';
-import '../../presentation/screens/setting.dart';
+import '../../presentation/widgets/profile_pages/setting.dart';
 import '../../presentation/screens/sign_in_ui.dart';
 import '../../presentation/screens/welcome_ui.dart';
 
