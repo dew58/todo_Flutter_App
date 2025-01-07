@@ -1,7 +1,9 @@
 # 📋 Uptodo App
 
-
 Uptodo is a modern, efficient, and beautifully designed To-Do application, built with **Flutter** to help you manage your tasks effortlessly. With its intuitive user interface and robust features, staying organized has never been easier!  
+
+
+![appcover](https://github.com/user-attachments/assets/b68ffb7d-976e-48d2-9308-00885db1c0b0)
 
 ---
 
@@ -45,13 +47,14 @@ Uptodo is a modern, efficient, and beautifully designed To-Do application, built
 ## 📸 Screenshots  
 
 ### 🏠 Home Screen  
-![Home Screen](https://via.placeholder.com/400x300?text=Home+Screen)
+![Screenshot_1736199295](https://github.com/user-attachments/assets/5e0e5b3d-1e3f-49d0-86f9-744c0e903a9a)
 
-### 📝 Task Management  
-![Task Management](https://via.placeholder.com/400x300?text=Task+Management)  
 
-### 🔒 Authorization  
-![Dark Mode](https://via.placeholder.com/400x300?text=Dark+Mode)  
+### 📝 Task Management    
+![Screenshot_1736199593](https://github.com/user-attachments/assets/f96aabd0-b97e-4e07-9913-c5635795ea29)
+
+### 🔒 Authorization   
+![Screenshot_1736192256](https://github.com/user-attachments/assets/72d5191b-cf4a-4e25-8494-a0c11d129dd2)
 
 ---
 
@@ -64,7 +67,10 @@ Uptodo is a modern, efficient, and beautifully designed To-Do application, built
 2. Install dependencies:
    ```bash
    flutter pub get
-3. Run the app:
+3. Run this command:
+   ```bash
+   flutter packages pub run build_runner build  --delete-conflicting-outputs
+4. Run the app:
    ```bash
    flutter run
 
