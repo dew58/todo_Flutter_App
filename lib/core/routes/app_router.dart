@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/core/routes/settings.dart';
+import 'package:todo/presentation/widgets/profile_pages/about_us.dart';
+import 'package:todo/presentation/widgets/profile_pages/help_and_feedback.dart';
+import 'package:todo/presentation/widgets/profile_pages/support_us.dart';
 
 import '../../presentation/cubits/login_auth/auth_cubit.dart';
 import '../../presentation/screens/home/mainHome.dart';
@@ -44,6 +47,18 @@ class AppRouter {
       case Routers.setting:
         return MaterialPageRoute(
           builder: (context) => const Setting(),
+        );
+      case Routers.aboutUs:
+        return MaterialPageRoute(
+          builder: (context) => const AboutUs(),
+        );
+      case Routers.helpAndFeedback:
+        return MaterialPageRoute(
+          builder: (context) => const HelpAndFeedback(),
+        );
+      case Routers.support:
+        return MaterialPageRoute(
+          builder: (context) => const SupportUs(),
         );
       default:
         return MaterialPageRoute(

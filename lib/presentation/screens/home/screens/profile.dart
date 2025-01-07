@@ -174,15 +174,22 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               ProfileItem().profileItem(
-                                  "assets/icons/menu.png", "About US", () {}),
+                                  "assets/icons/menu.png", "About US", () {
+                                context.pushNamed(Routers.aboutUs);
+                              }),
                               ProfileItem().profileItem(
-                                  "assets/icons/info-circle.png", "FAQ", () {}),
+                                  "assets/icons/info-circle.png", "FAQ", () {
+                                context.pushNamed(Routers.faq);
+                              }),
                               ProfileItem().profileItem(
-                                  "assets/icons/flash.png",
-                                  "Help & Feedback",
-                                  () {}),
+                                  "assets/icons/flash.png", "Help & Feedback",
+                                  () {
+                                context.pushNamed(Routers.helpAndFeedback);
+                              }),
                               ProfileItem().profileItem(
-                                  "assets/icons/like.png", "Support US", () {}),
+                                  "assets/icons/like.png", "Support US", () {
+                                context.pushNamed(Routers.support);
+                              }),
                               ProfileItem().profileItem(
                                   "assets/icons/logout.png", "Log out", () {
                                 context.read<AuthCubit>().logOut(context);
