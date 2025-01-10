@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background/flutter_background.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/core/helper/spacing.dart';
@@ -32,6 +33,25 @@ class _FocuesState extends State<Focues> {
   void initState() {
     super.initState();
     _requestDoNotDisturbPermission();
+    _initializeBackgroundExecution();
+  }
+
+  Future<void> _initializeBackgroundExecution() async {
+    final androidConfig = FlutterBackgroundAndroidConfig(
+      notificationTitle: "Focues Timer",
+      notificationText: "The timer is running in the background",
+      notificationImportance: AndroidNotificationImportance.normal,
+      notificationIcon:
+          AndroidResource(name: 'background_icon', defType: 'drawable'),
+    );
+    bool hasPermissions = await FlutterBackground.hasPermissions;
+    if (!hasPermissions) {
+      hasPermissions =
+          await FlutterBackground.initialize(androidConfig: androidConfig);
+    }
+    if (hasPermissions) {
+      FlutterBackground.enableBackgroundExecution();
+    }
   }
 
   Future<void> _requestDoNotDisturbPermission() async {
@@ -39,6 +59,12 @@ class _FocuesState extends State<Focues> {
     if (isGranted != null && !isGranted) {
       FlutterDnd.gotoPolicySettings();
     }
+  }
+
+  @override
+  void dispose() {
+    FlutterBackground.disableBackgroundExecution();
+    super.dispose();
   }
 
   @override
