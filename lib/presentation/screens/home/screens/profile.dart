@@ -15,7 +15,7 @@ import '../../../cubits/login_auth/auth_cubit.dart';
 import '../../../widgets/profile_item.dart';
 import '../../../widgets/profile_widgets/alert_dialog_edit_image.dart';
 import '../../../widgets/profile_widgets/alert_dialog_edit_name.dart';
-import '../../../widgets/profile_widgets/alert_dialog_edit_password.dart';
+// import '../../../widgets/profile_widgets/alert_dialog_edit_password.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -56,12 +56,14 @@ class _ProfileState extends State<Profile> {
                       Center(
                         child: Column(children: [
                           CircleAvatar(
-                            backgroundColor: MyColors.mainBackGround,
-                            radius: 35,
-                            backgroundImage: (appUser.image != null)
-                                ? FileImage(File(appUser.image!))
-                                : const AssetImage("assets/icons/userx4.png"),
-                          ),
+                              backgroundColor: MyColors.mainBackGround,
+                              radius: 40,
+                              backgroundImage: (appUser.image != null)
+                                  ? (appUser.image!.startsWith('http')
+                                      ? NetworkImage(appUser.image!)
+                                      : FileImage(File(appUser.image!)))
+                                  : const AssetImage(
+                                      "assets/icons/userx4.png")),
                           Text(
                             appUser.name ?? " ",
                             style: const TextStyle(color: Colors.white),
@@ -146,16 +148,16 @@ class _ProfileState extends State<Profile> {
                                   setState(() {});
                                 });
                               }),
-                              ProfileItem().profileItem("assets/icons/key.png",
-                                  "Change account password", () {
-                                setState(() {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return const AlertDialogEditPassword();
-                                      });
-                                });
-                              }),
+                              // ProfileItem().profileItem("assets/icons/key.png",
+                              //     "Change account password", () {
+                              //   setState(() {
+                              //     showDialog(
+                              //         context: context,
+                              //         builder: (context) {
+                              //           return const AlertDialogEditPassword();
+                              //         });
+                              //   });
+                              // }),
                               ProfileItem().profileItem(
                                   "assets/icons/camera.png",
                                   "Change account image", () {
@@ -172,15 +174,22 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               ProfileItem().profileItem(
-                                  "assets/icons/menu.png", "About US", () {}),
+                                  "assets/icons/menu.png", "About US", () {
+                                context.pushNamed(Routers.aboutUs);
+                              }),
                               ProfileItem().profileItem(
-                                  "assets/icons/info-circle.png", "FAQ", () {}),
+                                  "assets/icons/info-circle.png", "FAQ", () {
+                                context.pushNamed(Routers.faq);
+                              }),
                               ProfileItem().profileItem(
-                                  "assets/icons/flash.png",
-                                  "Help & Feedback",
-                                  () {}),
+                                  "assets/icons/flash.png", "Help & Feedback",
+                                  () {
+                                context.pushNamed(Routers.helpAndFeedback);
+                              }),
                               ProfileItem().profileItem(
-                                  "assets/icons/like.png", "Support US", () {}),
+                                  "assets/icons/like.png", "Support US", () {
+                                context.pushNamed(Routers.support);
+                              }),
                               ProfileItem().profileItem(
                                   "assets/icons/logout.png", "Log out", () {
                                 context.read<AuthCubit>().logOut(context);

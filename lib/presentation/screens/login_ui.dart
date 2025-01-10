@@ -172,7 +172,9 @@ class Loginui extends StatelessWidget {
                   verticalSpace(30),
                   Center(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        context.read<AuthCubit>().signInWithGoogle();
+                      },
                       child: Container(
                         width: 327.w,
                         height: 50.h,

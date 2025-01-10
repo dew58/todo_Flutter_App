@@ -54,14 +54,15 @@ class _IndexState extends State<Index> {
               surfaceTintColor: MyColors.mainBackGround,
               actions: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: CircleAvatar(
-                    backgroundColor: MyColors.mainBackGround,
-                    radius: 24,
-                    backgroundImage: (appUser.image != null)
-                        ? FileImage(File(appUser.image!))
-                        : const AssetImage("assets/icons/userx4.png"),
-                  ),
+                      backgroundColor: MyColors.mainBackGround,
+                      radius: 25,
+                      backgroundImage: (appUser.image != null)
+                          ? (appUser.image!.startsWith('http')
+                              ? NetworkImage(appUser.image!)
+                              : FileImage(File(appUser.image!)))
+                          : const AssetImage("assets/icons/user.png")),
                 ),
               ],
               elevation: 0,

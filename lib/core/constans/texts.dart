@@ -29,7 +29,7 @@ class Texts {
   static const String next = "NEXT";
 
   static const String loginInLoginPage = "Login";
-  static const String userNameLoginPage = "Username";
+  static const String userNameLoginPage = "Email";
   static const String passwordLoginPage = "Password";
   static const String register = "Register";
 

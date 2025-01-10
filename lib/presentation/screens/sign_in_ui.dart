@@ -79,7 +79,7 @@ class Signin extends StatelessWidget {
                     child: TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        hintText: "Enter Your Username",
+                        hintText: "Enter Your email",
                         hintStyle: const TextStyle(color: Colors.grey),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
@@ -224,7 +224,9 @@ class Signin extends StatelessWidget {
                   verticalSpace(25),
                   Center(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        context.read<AuthCubit>().signInWithGoogle();
+                      },
                       child: Container(
                         width: 327.w,
                         height: 50.h,

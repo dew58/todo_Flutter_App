@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/routes/app_router.dart';
 import 'core/routes/settings.dart';
 import 'core/themes/my_colors.dart';
@@ -27,17 +28,28 @@ class _MyAppState extends State<MyApp> {
     determineInitialRoute();
   }
 
-  void determineInitialRoute() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+  void determineInitialRoute() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
+    if (isFirstTime) {
       setState(() {
-        if (user == null) {
-          initialRoute = Routers.logIn;
-        } else {
-          initialRoute = Routers.home;
-        }
+        initialRoute = Routers.onBorder;
         isInitialized = true;
       });
-    });
+      prefs.setBool('isFirstTime', false);
+    } else {
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        setState(() {
+          if (user == null) {
+            initialRoute = Routers.logIn;
+          } else {
+            initialRoute = Routers.home;
+          }
+          isInitialized = true;
+        });
+      });
+    }
   }
 
   @override
