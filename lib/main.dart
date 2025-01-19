@@ -7,8 +7,15 @@ import 'package:todo/domain/models/todo_model.dart';
 import 'package:todo/domain/models/user.dart';
 import 'package:todo/presentation/cubits/add_todo_cubit/add_to_do_cubit.dart';
 import 'package:todo/to_do_app.dart';
+import 'core/notifications/notification_service.dart';
+import 'core/notifications/work_service.dart';
 import 'core/routes/app_router.dart';
 import 'firebase_options.dart';
+
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'dart:developer';
 
 late String initialRoute;
 Box<ToDo>? box;
@@ -19,6 +26,8 @@ final ValueNotifier<bool> appUserReady = ValueNotifier(false);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeTimeZones();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -41,6 +50,9 @@ Future<void> main() async {
     }
   });
 
+  await LocalNotificationService.init();
+  await WorkManagerService().init();
+
   runApp(
     BlocProvider(
       create: (context) => AddToDoCubit(),
@@ -49,4 +61,11 @@ Future<void> main() async {
       ),
     ),
   );
+}
+
+Future<void> initializeTimeZones() async {
+  tz.initializeTimeZones();
+  final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(currentTimeZone));
+  log('Time zone initialized to: ${tz.local.name}');
 }

@@ -8,6 +8,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:todo/core/helper/extenstion.dart';
 import '../../../../core/constans/texts.dart';
 import '../../../../core/helper/spacing.dart';
+import '../../../../core/notifications/notification_service.dart';
 import '../../../../core/themes/my_colors.dart';
 import '../../../../domain/models/todo_model.dart';
 import '../../../../main.dart';
@@ -57,7 +58,7 @@ class _IndexState extends State<Index> {
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: CircleAvatar(
                       backgroundColor: MyColors.mainBackGround,
-                      radius: 25,
+                      radius: 20,
                       backgroundImage: (appUser.image != null)
                           ? (appUser.image!.startsWith('http')
                               ? NetworkImage(appUser.image!)
@@ -181,6 +182,8 @@ class _IndexState extends State<Index> {
                                   .descriptionController
                                   .text,
                               dateTime: format.format(formatedDateTime!)));
+                          // LocalNotificationService.showSchduledNotification(
+                          //     currentDate: formatedDateTime);
                         } else {
                           context.read<AddToDoCubit>().autovalidateMode =
                               AutovalidateMode.always;
